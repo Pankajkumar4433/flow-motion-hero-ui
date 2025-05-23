@@ -78,34 +78,36 @@ const DropdownMenuOnly = () => {
   const renderMenuItem = (item: MenuItem) => {
     if (item.items) {
       return (
-        <NavigationMenuItem key={item.title} className="text-muted-foreground">
-          <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50">
+        <NavigationMenuItem key={item.title}>
+          <NavigationMenuTrigger className="bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50">
             {item.title}
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-popover border shadow-lg">
-            <ul className="w-80 p-3">
-              <NavigationMenuLink>
-                {item.items.map((subItem) => (
-                  <li key={subItem.title}>
+          <NavigationMenuContent className="min-w-[400px] bg-popover border shadow-lg">
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {item.items.map((subItem) => (
+                <li key={subItem.title}>
+                  <NavigationMenuLink asChild>
                     <a
-                      className="flex select-none gap-4 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted hover:text-accent-foreground"
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       href={subItem.url}
                     >
-                      {subItem.icon}
-                      <div>
-                        <div className="text-sm font-semibold">
-                          {subItem.title}
+                      <div className="flex items-center gap-3">
+                        {subItem.icon}
+                        <div>
+                          <div className="text-sm font-medium leading-none">
+                            {subItem.title}
+                          </div>
+                          {subItem.description && (
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground mt-1">
+                              {subItem.description}
+                            </p>
+                          )}
                         </div>
-                        {subItem.description && (
-                          <p className="text-sm leading-snug text-muted-foreground">
-                            {subItem.description}
-                          </p>
-                        )}
                       </div>
                     </a>
-                  </li>
-                ))}
-              </NavigationMenuLink>
+                  </NavigationMenuLink>
+                </li>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
@@ -115,8 +117,8 @@ const DropdownMenuOnly = () => {
   };
 
   return (
-    <NavigationMenu className="z-50">
-      <NavigationMenuList>
+    <NavigationMenu className="relative z-[1000]">
+      <NavigationMenuList className="flex space-x-1">
         {menuItems.map((item) => renderMenuItem(item))}
       </NavigationMenuList>
     </NavigationMenu>
