@@ -20,6 +20,24 @@ interface MenuItem {
 const DropdownMenuOnly = () => {
   const menuItems: MenuItem[] = [
     {
+      title: "Features",
+      url: "#",
+      items: [
+        {
+          title: "Analytics",
+          description: "Get detailed insights into your business performance",
+          icon: <Zap className="size-5 shrink-0" />,
+          url: "/analytics",
+        },
+        {
+          title: "Automation",
+          description: "Streamline your workflow with powerful automation tools",
+          icon: <Trees className="size-5 shrink-0" />,
+          url: "/automation",
+        },
+      ],
+    },
+    {
       title: "Products",
       url: "#",
       items: [
@@ -61,8 +79,10 @@ const DropdownMenuOnly = () => {
     if (item.items) {
       return (
         <NavigationMenuItem key={item.title} className="text-muted-foreground">
-          <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuTrigger className="hover:bg-accent hover:text-accent-foreground data-[state=open]:bg-accent/50">
+            {item.title}
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="bg-popover border shadow-lg">
             <ul className="w-80 p-3">
               <NavigationMenuLink>
                 {item.items.map((subItem) => (
@@ -95,7 +115,7 @@ const DropdownMenuOnly = () => {
   };
 
   return (
-    <NavigationMenu>
+    <NavigationMenu className="z-50">
       <NavigationMenuList>
         {menuItems.map((item) => renderMenuItem(item))}
       </NavigationMenuList>
